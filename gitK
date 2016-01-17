@@ -1,0 +1,4 @@
+#! /bin/sh
+
+cd /media/PiShare/Git/kiosk_SAMHdev/
+git pull
