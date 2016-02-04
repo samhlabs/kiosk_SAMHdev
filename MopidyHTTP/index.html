@@ -6,14 +6,39 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="initial-scale=1">
-
+	<script type="text/javascript" src="mopidy/mopidy.min.js"></script>
 		<title>The Works Kiosk V.03</title>
 	</head>
 
 	<body>
 		<h1>...Hello World...</h1>
 		
+var trackDesc = function (track) {
+    return track.name + " by " + track.artists[0].name +
+        " from " + track.album.name;
+};
 
+var queueAndPlay = function (playlistNum, trackNum) {
+    playlistNum = playlistNum || 0;
+    trackNum = trackNum || 0;
+    mopidy.playlists.getPlaylists().then(function (playlists) {
+        var playlist = playlists[playlistNum];
+        console.log("Loading playlist:", playlist.name);
+        return mopidy.tracklist.add(playlist.tracks).then(function (tlTracks) {
+            return mopidy.playback.play(tlTracks[trackNum]).then(function () {
+                return mopidy.playback.getCurrentTrack().then(function (track) {
+                    console.log("Now playing:", trackDesc(track));
+                });
+            });
+        });
+    })
+    .catch(console.error.bind(console)) // Handle errors here
+    .done();                            // ...or they'll be thrown here
+};
+
+var mopidy = new Mopidy();             // Connect to server
+mopidy.on(console.log.bind(console));  // Log all events
+mopidy.on("state:online", queueAndPlay);
 		
 	</body>
 
