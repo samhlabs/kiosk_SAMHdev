@@ -6,13 +6,12 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="initial-scale=1">
-	<script type="text/javascript" src="mopidy/mopidy.min.js"></script>
 		<title>The Works Kiosk V.04</title>
 	</head>
 
 	<body>
 		<h1>...Hello World...</h1>
-		
+<script type="text/javascript" src="mopidy/mopidy.min.js">	
 var trackDesc = function (track) {
     return track.name + " by " + track.artists[0].name +
         " from " + track.album.name;
@@ -39,7 +38,7 @@ var queueAndPlay = function (playlistNum, trackNum) {
 var mopidy = new Mopidy();             // Connect to server
 mopidy.on(console.log.bind(console));  // Log all events
 mopidy.on("state:online", queueAndPlay);
-		
+		</script>
 	</body>
 
 </html>
